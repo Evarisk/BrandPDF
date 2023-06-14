@@ -160,7 +160,10 @@ class modBrandPDF extends DolibarrModules
             // CONST MODULE
 			$i++ => ['BRANDPDF_VERSION','chaine', $this->version, '', 0, 'current'],
 			$i++ => ['BRANDPDF_DB_VERSION', 'chaine', $this->version, '', 0, 'current'],
-            $i   => ['BRANDPDF_SHOW_PATCH_NOTE', 'integer', 1, '', 0, 'current'],
+            $i++ => ['BRANDPDF_SHOW_PATCH_NOTE', 'integer', 1, '', 0, 'current'],
+
+            // CONST DOCUMENT
+            $i   => ['BRAND_PDF_USE_LARGE_LOGO', 'integer', 0, '', 0, 'current'],
         ];
 
 		// Some keys to add into the overwriting translation tables

@@ -76,7 +76,7 @@ class ActionsBrandPdf
 			$form            = new Form($db);
 			$uploadDir       = $conf->ecm->dir_output . '/brandpdf/';
 			$logoArray       = [];
-			$backgroundArray = [];
+			$templateArray = [];
 
 			// Retrieve custom logos
 			$logoFilesArray = dol_dir_list($uploadDir . '/logos');
@@ -84,10 +84,10 @@ class ActionsBrandPdf
 				$logoArray[$file['name']] .= $file['name'];
 			}
 
-			// Retrieve custom backgrounds
-			$backgroundFilesArray = dol_dir_list($uploadDir . '/template_pdf');
-			foreach($backgroundFilesArray as $file) {
-				$backgroundArray[$file['name']] .= $file['name'];
+			// Retrieve custom templates
+			$templateFilesArray = dol_dir_list($uploadDir . '/template_pdf');
+			foreach($templateFilesArray as $file) {
+				$templateArray[$file['name']] .= $file['name'];
 			}
 
 			print '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '?facid='. $object->id . '" name="generateSpecial">';
@@ -98,8 +98,53 @@ class ActionsBrandPdf
 
 			print $langs->trans('Logo') . ' : ' . $form->selectArray('document_logo', $logoArray, 'ifone', 1, 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
 			print '<br></td>';
-			print $langs->trans('Background') . ' : ' . $form->selectArray('document_background', $backgroundArray, 'ifone', 1, 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
+			print $langs->trans('Template') . ' : ' . $form->selectArray('document_template', $templateArray, 'ifone', 1, 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
 			print '<input class="button buttongen reposition nomargintop nomarginbottom" id="generatebutton" name="generatebutton" type="submit" value="'. $langs->trans('SpecialGenerate') .'"';
+		}
+
+		return 0;
+	}
+
+	/**
+	 *  Overloading the doActions function : replacing the parent's function with the one below
+	 *
+	 * @param  array  $parameters Hook metadatas (context, etc...)
+	 * @param  Object $object     Hook object data (id, ref, etc...)
+	 * @param  string $action     Hook current actions (add, update etc...)
+	 * @return int                0 < on error, 0 on success, 1 to replace standard code
+	 */
+	public function doActions(array $parameters, $object, $action): int
+	{
+		global $conf, $db, $mysoc;
+
+		if ($parameters['currentcontext'] == 'invoicecard') {
+			if ($action == 'builddoc' && GETPOST('generatebutton')) {
+                require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
+
+                $template_pdf = GETPOST('document_template', 'alpha');
+                if (intval($template_pdf) > 0) {
+                    dolibarr_set_const($db, 'MAIN_ADD_PDF_BACKGROUND', 'template_pdf/' . $template_pdf);
+                } else {
+                    dolibarr_del_const($db, 'MAIN_ADD_PDF_BACKGROUND');
+                }
+
+                $logo = GETPOST('document_logo', 'alpha');
+                if (intval($logo) > 0) {
+                    if (empty($conf->global->MAIN_PDF_USE_LARGE_LOGO)) {
+                        dolibarr_set_const($db, 'MAIN_PDF_USE_LARGE_LOGO', 1);
+                    } else {
+                        dolibarr_set_const($db, 'BRAND_PDF_USE_LARGE_LOGO', 1);
+                    }
+                    $mysoc->logo = $logo;
+                }
+
+                if (intval($template_pdf) > 0 || intval($logo) > 0) {
+                    $conf->mycompany->dir_output = DOL_DATA_ROOT . '/ecm/brandpdf';
+                    if (!empty($conf->mycompany->multidir_output[$object->entity])) {
+                        $conf->mycompany->multidir_output[$object->entity] = DOL_DATA_ROOT . '/ecm/brandpdf';
+                    }
+                }
+            }
 		}
 
 		return 0;
