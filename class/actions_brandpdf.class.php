@@ -115,14 +115,18 @@ class ActionsBrandPdf
 	 */
 	public function doActions(array $parameters, Object $object, string $action): int
 	{
-		global $conf, $db, $mysoc;
+		global $conf, $db, $langs, $mysoc;
 
 		if ($parameters['currentcontext'] == 'invoicecard') {
 			if ($action == 'builddoc' && GETPOST('generatebutton')) {
                 require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 
                 $template_pdf = GETPOST('document_template', 'alpha');
-                if (intval($template_pdf) > 0) {
+                $fileInfo     = pathinfo($template_pdf);
+                if ($fileInfo['extension'] != 'pdf') {
+                    setEventMessages($langs->trans('ErrorWrongFileExtension'), [], 'errors');
+                    return 1;
+                } else if (intval($template_pdf) > 0) {
                     dolibarr_set_const($db, 'MAIN_ADD_PDF_BACKGROUND', 'template_pdf/' . $template_pdf);
                 } else {
                     dolibarr_del_const($db, 'MAIN_ADD_PDF_BACKGROUND');
