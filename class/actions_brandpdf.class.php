@@ -129,7 +129,7 @@ class ActionsBrandPdf
                 }
 
                 $logo = GETPOST('document_logo', 'alpha');
-                if (intval($logo) > 0) {
+                if (intval($logo) >= 0) {
                     if (empty($conf->global->MAIN_PDF_USE_LARGE_LOGO)) {
                         dolibarr_set_const($db, 'MAIN_PDF_USE_LARGE_LOGO', 1);
                     } else {
@@ -138,11 +138,15 @@ class ActionsBrandPdf
                     $mysoc->logo = $logo;
                 }
 
-                if (intval($template_pdf) > 0 || intval($logo) > 0) {
+                if (intval($template_pdf) >= 0 || intval($logo) >= 0) {
                     $conf->mycompany->dir_output = DOL_DATA_ROOT . '/ecm/brandpdf';
                     if (!empty($conf->mycompany->multidir_output[$object->entity])) {
                         $conf->mycompany->multidir_output[$object->entity] = DOL_DATA_ROOT . '/ecm/brandpdf';
                     }
+                }
+
+                if (intval($template_pdf) >= 0 && intval($logo) < 0) {
+                    copy(DOL_DATA_ROOT . '/mycompany/logos/' . $mysoc->logo, DOL_DATA_ROOT . '/ecm/brandpdf/logos/' . $mysoc->logo);
                 }
             }
 		}
@@ -179,11 +183,15 @@ class ActionsBrandPdf
                 $mysoc->logo = str_replace($mysoc->logo_small, '', '_small');
             }
 
-            if (intval($template_pdf) > 0 || intval($logo) > 0) {
+            if (intval($template_pdf) >= 0 || intval($logo) >= 0) {
                 $conf->mycompany->dir_output = DOL_DATA_ROOT . '/mycompany';
                 if (!empty($conf->mycompany->multidir_output[$object->entity])) {
                     $conf->mycompany->multidir_output[$object->entity] = DOL_DATA_ROOT . '/mycompany';
                 }
+            }
+
+            if (intval($template_pdf) >= 0 && intval($logo) < 0) {
+                unlink(DOL_DATA_ROOT . '/ecm/brandpdf/logos/' . $mysoc->logo);
             }
         }
 
