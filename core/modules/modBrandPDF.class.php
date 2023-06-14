@@ -126,7 +126,12 @@ class modBrandPDF extends DolibarrModules
 
 		// Data directories to create when module is enabled.
 		// Example: this->dirs = array("/brandpdf/temp","/brandpdf/subdir");
-		$this->dirs = ['/brandpdf/temp'];
+		$this->dirs = [
+            '/brandpdf/temp',
+            '/ecm/brandpdf',
+            '/ecm/brandpdf/logos',
+            '/ecm/brandpdf/template_pdf',
+            ];
 
 		// Config pages. Put here list of php page, stored into brandpdf/admin directory, to use to set up module.
 		$this->config_page_url = ['setup.php@brandpdf'];
