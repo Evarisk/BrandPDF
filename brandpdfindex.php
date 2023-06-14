@@ -30,4 +30,6 @@ if (file_exists('brandpdf.main.inc.php')) {
     die('Include of brandpdf main fails');
 }
 
+$showDashboard = false;
+
 require_once __DIR__ . '/../saturne/core/tpl/index/index_view.tpl.php';
