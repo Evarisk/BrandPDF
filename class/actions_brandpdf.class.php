@@ -68,7 +68,7 @@ class ActionsBrandPdf
 	 * @param  Object $object     Hook object data
 	 * @return int                0 < on error, 0 on success, 1 to replace standard code
 	 */
-	public function showDocuments(array $parameters, Object $object): int
+	public function showDocuments(array $parameters, $object): int
 	{
 		global $conf, $db, $langs;
 
@@ -123,7 +123,7 @@ class ActionsBrandPdf
 
                 $template_pdf = GETPOST('document_template', 'alpha');
                 $fileInfo     = pathinfo($template_pdf);
-                if ($fileInfo['extension'] != 'pdf') {
+                if ($fileInfo['extension'] != 'pdf' && $fileInfo['extension'] != '') {
                     setEventMessages($langs->trans('ErrorWrongFileExtension'), [], 'errors');
                     return 1;
                 } else if (intval($template_pdf) > 0) {
