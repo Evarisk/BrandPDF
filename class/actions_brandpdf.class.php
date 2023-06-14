@@ -68,7 +68,7 @@ class ActionsBrandPdf
 	 * @param  Object $object     Hook object data
 	 * @return int                0 < on error, 0 on success, 1 to replace standard code
 	 */
-	public function showDocuments(array $parameters, $object): int
+	public function showDocuments(array $parameters, Object $object): int
 	{
 		global $conf, $db, $langs;
 
@@ -113,7 +113,7 @@ class ActionsBrandPdf
 	 * @param  string $action     Hook current actions (add, update etc...)
 	 * @return int                0 < on error, 0 on success, 1 to replace standard code
 	 */
-	public function doActions(array $parameters, $object, $action): int
+	public function doActions(array $parameters, Object $object, string $action): int
 	{
 		global $conf, $db, $mysoc;
 
@@ -149,4 +149,45 @@ class ActionsBrandPdf
 
 		return 0;
 	}
+
+    /**
+     *  Overloading the afterPDFCreation function : replacing the parent's function with the one below
+     *
+     * @param  array  $parameters Hook metadatas (context, etc...)
+     * @param  Object $object     Hook object data (id, ref, etc...)
+     * @return int                0 < on error, 0 on success, 1 to replace standard code
+     */
+    public function afterPDFCreation(array $parameters, Object $object): int
+    {
+        global $conf, $db, $mysoc;
+
+        if ($parameters['currentcontext'] == 'invoicecard') {
+            require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
+
+            $template_pdf = GETPOST('document_template', 'alpha');
+            if (intval($template_pdf) > 0) {
+                dolibarr_del_const($db, 'MAIN_ADD_PDF_BACKGROUND');
+            }
+
+            $logo = GETPOST('document_logo', 'alpha');
+            if (intval($logo) > 0) {
+                if (empty($conf->global->BRAND_PDF_USE_LARGE_LOGO)) {
+                    dolibarr_del_const($db, 'MAIN_PDF_USE_LARGE_LOGO');
+                } else {
+                    dolibarr_del_const($db, 'BRAND_PDF_USE_LARGE_LOGO');
+                }
+                $mysoc->logo = str_replace($mysoc->logo_small, '', '_small');
+            }
+
+            if (intval($template_pdf) > 0 || intval($logo) > 0) {
+                $conf->mycompany->dir_output = DOL_DATA_ROOT . '/mycompany';
+                if (!empty($conf->mycompany->multidir_output[$object->entity])) {
+                    $conf->mycompany->multidir_output[$object->entity] = DOL_DATA_ROOT . '/mycompany';
+                }
+            }
+        }
+
+        return 0;
+    }
+
 }
