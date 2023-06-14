@@ -150,7 +150,7 @@ class ActionsBrandPdf
                 }
 
                 if (intval($template_pdf) >= 0 && intval($logo) < 0) {
-                    if (file_exists(DOL_DATA_ROOT . '/mycompany/logos/' . $mysoc->logo)) {
+                    if (dol_strlen($mysoc->logo) > 0 && file_exists(DOL_DATA_ROOT . '/mycompany/logos/' . $mysoc->logo)) {
                         copy(DOL_DATA_ROOT . '/mycompany/logos/' . $mysoc->logo, DOL_DATA_ROOT . '/ecm/brandpdf/logos/' . $mysoc->logo);
                     }
                 }
@@ -197,7 +197,7 @@ class ActionsBrandPdf
             }
 
             if (intval($template_pdf) >= 0 && intval($logo) < 0) {
-                if (file_exists(DOL_DATA_ROOT . '/ecm/brandpdf/logos/' . $mysoc->logo)) {
+                if (dol_strlen($mysoc->logo) > 0 && file_exists(DOL_DATA_ROOT . '/ecm/brandpdf/logos/' . $mysoc->logo)) {
                     unlink(DOL_DATA_ROOT . '/ecm/brandpdf/logos/' . $mysoc->logo);
                 }
             }
