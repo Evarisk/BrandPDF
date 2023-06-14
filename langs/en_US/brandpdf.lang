@@ -17,7 +17,17 @@
 # BrandPDF
 #
 
+# Data - Donnée
 ModuleBrandPDFName      = BrandPDF
 ModuleBrandPDFDesc      = Customization of document
 BrandPDFDescription     = Customization of document
 BrandPDFDescriptionLong = Customization of document
+
+
+#
+# Document
+#
+
+# Data - Donnée
+SpecialGenerate = Special Generation
+

@@ -22,3 +22,10 @@ ModuleBrandPDFName      = BrandPDF
 ModuleBrandPDFDesc      = Personnalisation des documents
 BrandPDFDescription     = Personnalisation des documents
 BrandPDFDescriptionLong = Personnalisation des documents
+
+#
+# Document
+#
+
+# Data - Donnée
+SpecialGenerate = Génération spéciale
