@@ -68,7 +68,7 @@ class ActionsBrandPdf
 	 * @param  Object $object     Hook object data
 	 * @return int                0 < on error, 0 on success, 1 to replace standard code
 	 */
-	public function showDocuments(array $parameters, $object): int
+	public function showDocuments(array $parameters): int
 	{
 		global $conf, $db, $langs;
 
@@ -98,12 +98,12 @@ class ActionsBrandPdf
 			print '<input type="hidden" name="token" value="' . newToken() . '">';
 			print '<input type="hidden" name="action" value="builddoc">';
 
-			print load_fiche_titre($langs->trans('BrandPDF'), '', '');
+			print load_fiche_titre($langs->trans('DocumentDetails'), '', '');
 
-			print $langs->trans('Logo') . ' : ' . $form::selectArray('document_logo', $logoArray, '', 1, 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
+			print $langs->trans('Logo') . ' : ' . $form::selectArray('document_logo', $logoArray, '', $langs->trans('SelectACustomLogo'), 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
 			print '<br></td>';
-			print $langs->trans('Template') . ' : ' . $form::selectArray('document_template', $templateArray, '', 1, 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
-			print '<input class="button buttongen reposition nomargintop nomarginbottom" id="generatebutton" name="generatebutton" type="submit" value="'. $langs->trans('SpecialGenerate') .'"';
+			print $langs->trans('Template') . ' : ' . $form::selectArray('document_template', $templateArray, '', $langs->trans('SelectACustomTemplate'), 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
+			//print '<input class="button buttongen reposition nomargintop nomarginbottom" id="generatebutton" name="generatebutton" type="submit" value="'. $langs->trans('SpecialGenerate') .'"';
 		}
 
 		return 0;
@@ -117,22 +117,31 @@ class ActionsBrandPdf
 	 * @param  string $action     Hook current actions (add, update etc...)
 	 * @return int                0 < on error, 0 on success, 1 to replace standard code
 	 */
-	public function doActions(array $parameters, Object $object, string $action): int
+	public function beforePDFCreation(array $parameters, ?object $object, string $action): int
 	{
-		global $conf, $db, $langs, $mysoc;
+		global $conf, $db, $mysoc;
 
 		if ($parameters['currentcontext'] == 'invoicecard') {
-			if ($action == 'builddoc' && GETPOST('generatebutton')) {
+			if ($action == 'builddoc') {
                 require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 
-                $template_pdf = GETPOST('document_template', 'alpha');
-                if (intval($template_pdf) > 0) {
-                    dolibarr_set_const($db, 'MAIN_ADD_PDF_BACKGROUND', 'template_pdf/' . $template_pdf);
-                } else {
-                    dolibarr_del_const($db, 'MAIN_ADD_PDF_BACKGROUND');
+				$defaultTemplate = !empty($conf->global->MAIN_ADD_PDF_BACKGROUND) ? $conf->global->MAIN_ADD_PDF_BACKGROUND : '';
+                $templatePdf     = GETPOST('document_template', 'alpha');
+				$logo            = GETPOST('document_logo', 'alpha');
+
+                if (intval($templatePdf) >= 0) {
+					if (!empty($defaultTemplate)) {
+						dolibarr_set_const($db, 'BRAND_PDF_PREVIOUS_BACKGROUND', $defaultTemplate);
+					}
+                    dolibarr_set_const($db, 'MAIN_ADD_PDF_BACKGROUND', 'template_pdf/' . $templatePdf);
+
+					if (intval($logo) < 0) {
+						if (dol_strlen($mysoc->logo) > 0 && file_exists(DOL_DATA_ROOT . '/mycompany/logos/' . $mysoc->logo)) {
+							copy(DOL_DATA_ROOT . '/mycompany/logos/' . $mysoc->logo, DOL_DATA_ROOT . '/ecm/brandpdf/logos/' . $mysoc->logo);
+						}
+					}
                 }
 
-                $logo = GETPOST('document_logo', 'alpha');
                 if (intval($logo) >= 0) {
                     if (empty($conf->global->MAIN_PDF_USE_LARGE_LOGO)) {
                         dolibarr_set_const($db, 'MAIN_PDF_USE_LARGE_LOGO', 1);
@@ -140,18 +149,18 @@ class ActionsBrandPdf
                         dolibarr_set_const($db, 'BRAND_PDF_USE_LARGE_LOGO', 1);
                     }
                     $mysoc->logo = $logo;
+
+					if (intval($templatePdf) < 0 && !empty($defaultTemplate)) {
+						if (file_exists(DOL_DATA_ROOT . '/mycompany/' . $defaultTemplate)) {
+							copy(DOL_DATA_ROOT . '/mycompany/' . $defaultTemplate, DOL_DATA_ROOT . '/ecm/brandpdf/' . $defaultTemplate);
+						}
+					}
                 }
 
-                if (intval($template_pdf) >= 0 || intval($logo) >= 0) {
+                if (intval($templatePdf) >= 0 || intval($logo) >= 0) {
                     $conf->mycompany->dir_output = DOL_DATA_ROOT . '/ecm/brandpdf';
                     if (!empty($conf->mycompany->multidir_output[$object->entity])) {
                         $conf->mycompany->multidir_output[$object->entity] = DOL_DATA_ROOT . '/ecm/brandpdf';
-                    }
-                }
-
-                if (intval($template_pdf) >= 0 && intval($logo) < 0) {
-                    if (dol_strlen($mysoc->logo) > 0 && file_exists(DOL_DATA_ROOT . '/mycompany/logos/' . $mysoc->logo)) {
-                        copy(DOL_DATA_ROOT . '/mycompany/logos/' . $mysoc->logo, DOL_DATA_ROOT . '/ecm/brandpdf/logos/' . $mysoc->logo);
                     }
                 }
             }
@@ -167,41 +176,51 @@ class ActionsBrandPdf
      * @param  Object $object     Hook object data (id, ref, etc...)
      * @return int                0 < on error, 0 on success, 1 to replace standard code
      */
-    public function afterPDFCreation(array $parameters, Object $object): int
+    public function afterPDFCreation(array $parameters, ?object $object): int
     {
         global $conf, $db, $mysoc;
 
         if ($parameters['currentcontext'] == 'invoicecard') {
-            require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
+			require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 
-            $template_pdf = GETPOST('document_template', 'alpha');
-            if (intval($template_pdf) > 0) {
-                dolibarr_del_const($db, 'MAIN_ADD_PDF_BACKGROUND');
-            }
+			$defaultTemplate = !empty($conf->global->MAIN_ADD_PDF_BACKGROUND) ? $conf->global->MAIN_ADD_PDF_BACKGROUND : '';
+			$templatePdf     = GETPOST('document_template', 'alpha');
+			$logo            = GETPOST('document_logo', 'alpha');
 
-            $logo = GETPOST('document_logo', 'alpha');
-            if (intval($logo) > 0) {
-                if (empty($conf->global->BRAND_PDF_USE_LARGE_LOGO)) {
-                    dolibarr_del_const($db, 'MAIN_PDF_USE_LARGE_LOGO');
-                } else {
-                    dolibarr_del_const($db, 'BRAND_PDF_USE_LARGE_LOGO');
-                }
-                $mysoc->logo = str_replace($mysoc->logo_small, '', '_small');
-            }
+			if (intval($templatePdf) >= 0) {
+				dolibarr_del_const($db, 'MAIN_ADD_PDF_BACKGROUND');
+				if (!empty($conf->global->BRAND_PDF_PREVIOUS_BACKGROUND)) {
+					dolibarr_set_const($db, 'MAIN_ADD_PDF_BACKGROUND', $conf->global->BRAND_PDF_PREVIOUS_BACKGROUND);
+					dolibarr_del_const($db, 'BRAND_PDF_PREVIOUS_BACKGROUND');
+				}
+			}
 
-            if (intval($template_pdf) >= 0 || intval($logo) >= 0) {
-                $conf->mycompany->dir_output = DOL_DATA_ROOT . '/mycompany';
-                if (!empty($conf->mycompany->multidir_output[$object->entity])) {
-                    $conf->mycompany->multidir_output[$object->entity] = DOL_DATA_ROOT . '/mycompany';
-                }
-            }
+			if (intval($logo) >= 0) {
+				if (empty($conf->global->BRAND_PDF_USE_LARGE_LOGO)) {
+					dolibarr_del_const($db, 'MAIN_PDF_USE_LARGE_LOGO');
+				} else {
+					dolibarr_del_const($db, 'BRAND_PDF_USE_LARGE_LOGO');
+				}
+				$mysoc->logo = str_replace($mysoc->logo_small, '', '_small');
+			}
 
-            if (intval($template_pdf) >= 0 && intval($logo) < 0) {
-                if (dol_strlen($mysoc->logo) > 0 && file_exists(DOL_DATA_ROOT . '/ecm/brandpdf/logos/' . $mysoc->logo)) {
-                    unlink(DOL_DATA_ROOT . '/ecm/brandpdf/logos/' . $mysoc->logo);
-                }
-            }
-        }
+			if (intval($templatePdf) >= 0 || intval($logo) >= 0) {
+				$conf->mycompany->dir_output = DOL_DATA_ROOT . '/mycompany';
+				if (!empty($conf->mycompany->multidir_output[$object->entity])) {
+					$conf->mycompany->multidir_output[$object->entity] = DOL_DATA_ROOT . '/mycompany';
+				}
+			}
+
+			if (intval($templatePdf) >= 0 && intval($logo) < 0) {
+				if (dol_strlen($mysoc->logo) > 0 && file_exists(DOL_DATA_ROOT . '/ecm/brandpdf/logos/' . $mysoc->logo)) {
+					unlink(DOL_DATA_ROOT . '/ecm/brandpdf/logos/' . $mysoc->logo);
+				}
+			} else if (intval($templatePdf) < 0 && intval($logo) >= 0 && !empty($defaultTemplate)) {
+				if (file_exists(DOL_DATA_ROOT . '/mycompany/logos/' . $defaultTemplate)) {
+					unlink(DOL_DATA_ROOT . '/ecm/brandpdf/' . $defaultTemplate);
+				}
+			}
+		}
 
         return 0;
     }

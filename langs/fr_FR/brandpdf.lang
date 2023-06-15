@@ -28,4 +28,7 @@ BrandPDFDescriptionLong = Personnalisation des documents
 #
 
 # Data - Donnée
-SpecialGenerate         = Génération spéciale
+SpecialGenerate       = Génération spéciale
+DocumentDetails       = Détails du document
+SelectACustomLogo     = Sélectionner un logo personnalisé
+SelectACustomTemplate = Sélectionner un template personnalisé
