@@ -80,14 +80,18 @@ class ActionsBrandPdf
 
 			// Retrieve custom logos
 			$logoFilesArray = dol_dir_list($uploadDir . '/logos', 'files', 0, '.(jpg|jpeg|png|svg)$');
-			foreach($logoFilesArray as $logoFile) {
-				$logoArray[$logoFile['name']] .= $logoFile['name'];
+			if (is_array($logoFilesArray) && !empty($logoFilesArray)) {
+				foreach ($logoFilesArray as $logoFile) {
+					$logoArray[$logoFile['name']] .= $logoFile['name'];
+				}
 			}
 
 			// Retrieve custom templates
 			$templateFilesArray = dol_dir_list($uploadDir . '/template_pdf', 'files', 0, '.pdf$');
-			foreach($templateFilesArray as $templateFile) {
-				$templateArray[$templateFile['name']] .= $templateFile['name'];
+			if (is_array($templateFilesArray) && !empty($templateFilesArray)) {
+				foreach ($templateFilesArray as $templateFile) {
+					$templateArray[$templateFile['name']] .= $templateFile['name'];
+				}
 			}
 
 			print '<form method="POST" action="' . $_SERVER['REQUEST_URI'] . '" name="generateSpecial">';
