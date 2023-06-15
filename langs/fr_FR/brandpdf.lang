@@ -29,4 +29,3 @@ BrandPDFDescriptionLong = Personnalisation des documents
 
 # Data - Donnée
 SpecialGenerate         = Génération spéciale
-ErrorWrongFileExtension = Le fichier doit être au format .pdf

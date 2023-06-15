@@ -30,5 +30,4 @@ BrandPDFDescriptionLong = Customization of document
 
 # Data - Donnée
 SpecialGenerate         = Special Generation
-ErrorWrongFileExtension = File must be in .pdf format
 

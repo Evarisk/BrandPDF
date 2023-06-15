@@ -76,16 +76,16 @@ class ActionsBrandPdf
 			$form            = new Form($db);
 			$uploadDir       = $conf->ecm->dir_output . '/brandpdf/';
 			$logoArray       = [];
-			$templateArray = [];
+			$templateArray   = [];
 
 			// Retrieve custom logos
-			$logoFilesArray = dol_dir_list($uploadDir . '/logos');
+			$logoFilesArray = dol_dir_list($uploadDir . '/logos', 'files', 0, '.(jpg|jpeg|png|svg)$');
 			foreach($logoFilesArray as $file) {
 				$logoArray[$file['name']] .= $file['name'];
 			}
 
 			// Retrieve custom templates
-			$templateFilesArray = dol_dir_list($uploadDir . '/template_pdf');
+			$templateFilesArray = dol_dir_list($uploadDir . '/template_pdf', 'files', 0, '.pdf$');
 			foreach($templateFilesArray as $file) {
 				$templateArray[$file['name']] .= $file['name'];
 			}
@@ -122,11 +122,7 @@ class ActionsBrandPdf
                 require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 
                 $template_pdf = GETPOST('document_template', 'alpha');
-                $fileInfo     = pathinfo($template_pdf);
-                if ($fileInfo['extension'] != 'pdf' && $fileInfo['extension'] != '') {
-                    setEventMessages($langs->trans('ErrorWrongFileExtension'), [], 'errors');
-                    return 1;
-                } else if (intval($template_pdf) > 0) {
+                if (intval($template_pdf) > 0) {
                     dolibarr_set_const($db, 'MAIN_ADD_PDF_BACKGROUND', 'template_pdf/' . $template_pdf);
                 } else {
                     dolibarr_del_const($db, 'MAIN_ADD_PDF_BACKGROUND');
