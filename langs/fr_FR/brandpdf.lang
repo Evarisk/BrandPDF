@@ -24,11 +24,22 @@ BrandPDFDescription     = Personnalisation des documents
 BrandPDFDescriptionLong = Personnalisation des documents
 
 #
+# Config
+#
+
+# Data - Donnée
+DefaultTemplate     = Template par défaut
+SelectTemplate      = Choix du template
+DefaultTemplateSave = Template par défaut enregistré
+EmptyTemplateSelect = Aucun template sélectionné
+
+#
 # Document
 #
 
 # Data - Donnée
-SpecialGenerate       = Génération spéciale
-DocumentDetails       = Détails du document
-SelectACustomLogo     = Sélectionner un logo personnalisé
-SelectACustomTemplate = Sélectionner un template personnalisé
+SpecialGenerate        = Génération spéciale
+DocumentDetails        = Détails du document
+SelectACustomLogo      = Sélectionner un logo personnalisé
+SelectACustomTemplate  = Sélectionner un template personnalisé
+SelectADefaultTemplate = Sélectionner un template par défaut

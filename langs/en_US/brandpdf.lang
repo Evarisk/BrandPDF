@@ -23,13 +23,25 @@ ModuleBrandPDFDesc      = Customization of document
 BrandPDFDescription     = Customization of document
 BrandPDFDescriptionLong = Customization of document
 
+#
+# Config
+#
+
+# Data - Donnée
+DefaultTemplate     = Default template
+SelectTemplate      = Select template
+DefaultTemplateSave = Template par défaut enregistré
+EmptyTemplateSelect = No template select
 
 #
 # Document
 #
 
 # Data - Donnée
-SpecialGenerate       = Special Generation
-DocumentDetails       = Document details
-SelectACustomLogo     = Select a custom logo
-SelectACustomTemplate = Select a custom template
+SpecialGenerate        = Special Generation
+DocumentDetails        = Document details
+SelectACustomLogo      = Select a custom logo
+SelectACustomTemplate  = Select a custom template
+SelectADefaultTemplate = Select a default template
+
+
