@@ -90,7 +90,7 @@ class ActionsBrandPdf
 				$templateArray[$file['name']] .= $file['name'];
 			}
 
-			print '<form method="POST" action="' . $_SERVER['PHP_SELF'] . '?facid='. $object->id . '" name="generateSpecial">';
+			print '<form method="POST" action="' . $_SERVER['REQUEST_URI'] . '" name="generateSpecial">';
 			print '<input type="hidden" name="token" value="' . newToken() . '">';
 			print '<input type="hidden" name="action" value="builddoc">';
 
