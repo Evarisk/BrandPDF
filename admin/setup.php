@@ -50,7 +50,7 @@ $value      = GETPOST('value', 'alpha');
 $backtopage = GETPOST('backtopage', 'alpha');
 
 // Security check - Protection if external user
-$permissiontoread = $user->rights->saturne->adminpage->read;
+$permissiontoread = $user->rights->brandpdf->adminpage->read;
 saturne_check_access($permissiontoread);
 
 /*
