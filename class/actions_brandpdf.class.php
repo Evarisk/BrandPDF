@@ -96,9 +96,9 @@ class ActionsBrandPdf
 
 			print load_fiche_titre($langs->trans('BrandPDF'), '', '');
 
-			print $langs->trans('Logo') . ' : ' . $form->selectArray('document_logo', $logoArray, 'ifone', 1, 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
+			print $langs->trans('Logo') . ' : ' . $form::selectArray('document_logo', $logoArray, '', 1, 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
 			print '<br></td>';
-			print $langs->trans('Template') . ' : ' . $form->selectArray('document_template', $templateArray, 'ifone', 1, 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
+			print $langs->trans('Template') . ' : ' . $form::selectArray('document_template', $templateArray, '', 1, 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
 			print '<input class="button buttongen reposition nomargintop nomarginbottom" id="generatebutton" name="generatebutton" type="submit" value="'. $langs->trans('SpecialGenerate') .'"';
 		}
 
