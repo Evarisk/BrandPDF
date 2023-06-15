@@ -74,7 +74,7 @@ class ActionsBrandPdf
 
 		if ($parameters['currentcontext'] == 'invoicecard') {
 			$form            = new Form($db);
-			$uploadDir       = $conf->ecm->dir_output . '/brandpdf/';
+			$uploadDir       = $conf->ecm->dir_output . '/brandpdf';
 			$logoArray       = [];
 			$templateArray   = [];
 
