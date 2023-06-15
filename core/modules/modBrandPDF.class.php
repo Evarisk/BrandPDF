@@ -140,7 +140,7 @@ class modBrandPDF extends DolibarrModules
 		// A condition to hide module
 		$this->hidden = false;
 		// List of module class names as string that must be enabled if this module is enabled. Example: array('always1'=>'modModuleToEnable1','always2'=>'modModuleToEnable2', 'FR1'=>'modModuleToEnableFR'...)
-		$this->depends = ['modSaturne', 'modECM'];
+		$this->depends = ['modSaturne', 'modECM', 'modFacture'];
 		$this->requiredby = []; // List of module class names as string to disable if this one is disabled. Example: array('modModuleToDisable1', ...)
 		$this->conflictwith = []; // List of module class names as string this module is in conflict with. Example: array('modModuleToDisable1', ...)
 
@@ -219,21 +219,21 @@ class modBrandPDF extends DolibarrModules
 		$r = 0;
 
 		// Add here entries to declare new menus
-        $this->menu[$r++] = [
-            'fk_menu'  => 'fk_mainmenu=brandpdf', // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-            'type'     => 'top', // This is a Top menu entry
-            'titre'    => 'BrandPDF',
-            'prefix'   => '<i class="fas fa-home pictofixedwidth"></i>',
-            'mainmenu' => 'brandpdf',
-            'leftmenu' => '',
-            'url'      => '/brandpdf/brandpdfindex.php', // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-            'langs'    => 'brandpdf@brandpdf',
-            'position' => 1000 + $r,
-            'enabled'  => '$conf->brandpdf->enabled', // Define condition to show or hide menu entry. Use '$conf->brandpdf->enabled' if entry must be visible if module is enabled.
-            'perms'    => '$user->rights->brandpdf->lire', // Use 'perms'=>'$user->rights->brandpdf->myobject->read' if you want your menu with a permission rules
-            'target'   => '',
-            'user'     => 0, // 0=Menu for internal users, 1=external users, 2=both
-        ];
+//        $this->menu[$r++] = [
+//            'fk_menu'  => 'fk_mainmenu=brandpdf', // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+//            'type'     => 'top', // This is a Top menu entry
+//            'titre'    => 'BrandPDF',
+//            'prefix'   => '<i class="fas fa-home pictofixedwidth"></i>',
+//            'mainmenu' => 'brandpdf',
+//            'leftmenu' => '',
+//            'url'      => '/brandpdf/brandpdfindex.php', // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+//            'langs'    => 'brandpdf@brandpdf',
+//            'position' => 1000 + $r,
+//            'enabled'  => '$conf->brandpdf->enabled', // Define condition to show or hide menu entry. Use '$conf->brandpdf->enabled' if entry must be visible if module is enabled.
+//            'perms'    => '$user->rights->brandpdf->lire', // Use 'perms'=>'$user->rights->brandpdf->myobject->read' if you want your menu with a permission rules
+//            'target'   => '',
+//            'user'     => 0, // 0=Menu for internal users, 1=external users, 2=both
+//        ];
 	}
 
     /**
