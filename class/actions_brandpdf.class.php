@@ -129,11 +129,16 @@ class ActionsBrandPdf
                 $templatePdf     = GETPOST('document_template', 'alpha');
 				$logo            = GETPOST('document_logo', 'alpha');
 
-                if (intval($templatePdf) >= 0) {
-					if (!empty($defaultTemplate)) {
+                if (intval($templatePdf) >= 0 || !empty($defaultTemplate)) {
+					if (!empty($defaultTemplate) && intval($templatePdf) < 0) {
 						dolibarr_set_const($db, 'BRAND_PDF_PREVIOUS_BACKGROUND', $defaultTemplate);
-					}
-                    dolibarr_set_const($db, 'MAIN_ADD_PDF_BACKGROUND', 'template_pdf/' . $templatePdf);
+                        dolibarr_set_const($db, 'MAIN_ADD_PDF_BACKGROUND', 'template_pdf/' . $defaultTemplate);
+                    } else if (!empty($defaultTemplate) && intval($templatePdf) >= 0) {
+                        dolibarr_set_const($db, 'BRAND_PDF_PREVIOUS_BACKGROUND', $defaultTemplate);
+                        dolibarr_set_const($db, 'MAIN_ADD_PDF_BACKGROUND', 'template_pdf/' . $templatePdf);
+                    } else {
+                        dolibarr_set_const($db, 'MAIN_ADD_PDF_BACKGROUND', 'template_pdf/' . $templatePdf);
+                    }
 
 					if (intval($logo) < 0) {
 						if (dol_strlen($mysoc->logo) > 0 && file_exists(DOL_DATA_ROOT . '/mycompany/logos/' . $mysoc->logo)) {
@@ -142,22 +147,23 @@ class ActionsBrandPdf
 					}
                 }
 
-                if (intval($logo) >= 0) {
+                if (!empty($defaultTemplate)) {
                     if (empty($conf->global->MAIN_PDF_USE_LARGE_LOGO)) {
                         dolibarr_set_const($db, 'MAIN_PDF_USE_LARGE_LOGO', 1);
                     } else {
                         dolibarr_set_const($db, 'BRAND_PDF_USE_LARGE_LOGO', 1);
                     }
-                    $mysoc->logo = $logo;
 
-					if (intval($templatePdf) < 0 && !empty($defaultTemplate)) {
-						if (file_exists(DOL_DATA_ROOT . '/mycompany/' . $defaultTemplate)) {
-							copy(DOL_DATA_ROOT . '/mycompany/' . $defaultTemplate, DOL_DATA_ROOT . '/ecm/brandpdf/' . $defaultTemplate);
-						}
-					}
+                    if ((intval($templatePdf) < 0) && file_exists(DOL_DATA_ROOT . '/mycompany/' . $defaultTemplate)) {
+                        copy(DOL_DATA_ROOT . '/mycompany/' . $defaultTemplate, DOL_DATA_ROOT . '/ecm/brandpdf/' . $defaultTemplate);
+                    }
                 }
 
-                if (intval($templatePdf) >= 0 || intval($logo) >= 0) {
+                if (intval($logo) >= 0) {
+                    $mysoc->logo = $logo;
+                }
+
+                if (intval($templatePdf) >= 0 || intval($logo) >= 0 || !empty($defaultTemplate)) {
                     $conf->mycompany->dir_output = DOL_DATA_ROOT . '/ecm/brandpdf';
                     if (!empty($conf->mycompany->multidir_output[$object->entity])) {
                         $conf->mycompany->multidir_output[$object->entity] = DOL_DATA_ROOT . '/ecm/brandpdf';
@@ -187,7 +193,7 @@ class ActionsBrandPdf
 			$templatePdf     = GETPOST('document_template', 'alpha');
 			$logo            = GETPOST('document_logo', 'alpha');
 
-			if (intval($templatePdf) >= 0) {
+			if (intval($templatePdf) >= 0 || !empty($defaultTemplate)) {
 				dolibarr_del_const($db, 'MAIN_ADD_PDF_BACKGROUND');
 				if (!empty($conf->global->BRAND_PDF_PREVIOUS_BACKGROUND)) {
 					dolibarr_set_const($db, 'MAIN_ADD_PDF_BACKGROUND', $conf->global->BRAND_PDF_PREVIOUS_BACKGROUND);
