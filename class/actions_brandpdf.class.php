@@ -72,7 +72,7 @@ class ActionsBrandPdf
 	{
 		global $conf, $db, $langs;
 
-		if ($parameters['currentcontext'] == 'invoicecard') {
+		if ($parameters['currentcontext'] == 'invoicecard' || $parameters['currentcontext'] == 'propalcard') {
 			$form            = new Form($db);
 			$uploadDir       = $conf->ecm->dir_output . '/brandpdf';
 			$logoArray       = [];
@@ -121,7 +121,7 @@ class ActionsBrandPdf
 	{
 		global $conf, $db, $mysoc;
 
-		if ($parameters['currentcontext'] == 'invoicecard') {
+		if ($parameters['currentcontext'] == 'invoicecard' || $parameters['currentcontext'] == 'propalcard') {
 			if ($action == 'builddoc') {
                 require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 
@@ -186,7 +186,7 @@ class ActionsBrandPdf
     {
         global $conf, $db, $mysoc;
 
-        if ($parameters['currentcontext'] == 'invoicecard') {
+        if ($parameters['currentcontext'] == 'invoicecard' || $parameters['currentcontext'] == 'propalcard') {
 			require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 
 			$defaultTemplate = !empty($conf->global->MAIN_ADD_PDF_BACKGROUND) ? $conf->global->MAIN_ADD_PDF_BACKGROUND : '';
