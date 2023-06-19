@@ -103,6 +103,7 @@ class ActionsBrandPdf
 			print $langs->trans('Logo') . ' : ' . $form::selectArray('document_logo', $logoArray, '', $langs->trans('SelectACustomLogo'), 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
 			print '<br></td>';
 			print $langs->trans('Template') . ' : ' . $form::selectArray('document_template', $templateArray, !empty($conf->global->MAIN_ADD_PDF_BACKGROUND) ? $conf->global->MAIN_ADD_PDF_BACKGROUND : '', $langs->trans('SelectACustomTemplate'), 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
+            print $form->textwithpicto('', $langs->trans('InfoHowToDefaultTemplate'));
 			//print '<input class="button buttongen reposition nomargintop nomarginbottom" id="generatebutton" name="generatebutton" type="submit" value="'. $langs->trans('SpecialGenerate') .'"';
 		}
 

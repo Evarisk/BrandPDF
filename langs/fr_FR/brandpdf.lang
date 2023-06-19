@@ -38,8 +38,9 @@ EmptyTemplateSelect = Aucun template sélectionné
 #
 
 # Data - Donnée
-SpecialGenerate        = Génération spéciale
-DocumentDetails        = Détails du document
-SelectACustomLogo      = Sélectionner un logo personnalisé
-SelectACustomTemplate  = Sélectionner un template personnalisé
-SelectADefaultTemplate = Sélectionner un template par défaut
+SpecialGenerate          = Génération spéciale
+DocumentDetails          = Détails du document
+SelectACustomLogo        = Sélectionner un logo personnalisé
+SelectACustomTemplate    = Sélectionner un template personnalisé
+SelectADefaultTemplate   = Sélectionner un template par défaut
+InfoHowToDefaultTemplate = Pour définir un template par défaut, rendez-vous sur la page de configuration du module
