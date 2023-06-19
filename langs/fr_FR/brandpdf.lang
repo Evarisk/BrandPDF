@@ -28,10 +28,11 @@ BrandPDFDescriptionLong = Personnalisation des documents
 #
 
 # Data - Donnée
-DefaultTemplate     = Modèle par défaut
-SelectTemplate      = Choix du modèle
-DefaultTemplateSave = Modèle par défaut enregistré
-EmptyTemplateSelect = Aucun modèle sélectionné
+DefaultTemplate         = Modèle par défaut
+SelectTemplate          = Choix du modèle
+DefaultTemplateSave     = Modèle par défaut enregistré
+EmptyTemplateSelect     = Aucun modèle sélectionné
+HowToAddLogosOrTemplate = Pour ajouter de nouveaux modèles ou logos, allez dans "Documents > BrandPDF" et ajoutez les dans les dossiers requis (logos ou template_pdf).
 
 #
 # Document

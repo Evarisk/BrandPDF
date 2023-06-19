@@ -101,6 +101,7 @@ print '<input type="hidden" name="token" value="' . newToken() . '">';
 print '<input type="hidden" name="action" value="save">';
 
 print load_fiche_titre($langs->trans('Config'), '', '');
+print '<div class="opacitymedium">' . $langs->trans('HowToAddLogosOrTemplate') . '</div><br>';
 
 print '<table class="noborder centpercent editmode">';
 print '<tr class="liste_titre">';

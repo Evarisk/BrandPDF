@@ -28,10 +28,11 @@ BrandPDFDescriptionLong = Customization of document
 #
 
 # Data - Donnée
-DefaultTemplate     = Default template
-SelectTemplate      = Select template
-DefaultTemplateSave = Template par défaut enregistré
-EmptyTemplateSelect = No template select
+DefaultTemplate         = Default template
+SelectTemplate          = Select template
+DefaultTemplateSave     = Template par défaut enregistré
+EmptyTemplateSelect     = No template select
+HowToAddLogosOrTemplate = To add new templates or logos, go to "Documents > BrandPDF" and add them to the required folders (logos or template_pdf).
 
 #
 # Document
