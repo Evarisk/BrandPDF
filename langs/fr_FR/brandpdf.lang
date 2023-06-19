@@ -28,10 +28,10 @@ BrandPDFDescriptionLong = Personnalisation des documents
 #
 
 # Data - Donnée
-DefaultTemplate     = Template par défaut
-SelectTemplate      = Choix du template
-DefaultTemplateSave = Template par défaut enregistré
-EmptyTemplateSelect = Aucun template sélectionné
+DefaultTemplate     = Modèle par défaut
+SelectTemplate      = Choix du modèle
+DefaultTemplateSave = Modèle par défaut enregistré
+EmptyTemplateSelect = Aucun modèle sélectionné
 
 #
 # Document
@@ -41,6 +41,6 @@ EmptyTemplateSelect = Aucun template sélectionné
 SpecialGenerate          = Génération spéciale
 DocumentDetails          = Détails du document
 SelectACustomLogo        = Sélectionner un logo personnalisé
-SelectACustomTemplate    = Sélectionner un template personnalisé
-SelectADefaultTemplate   = Sélectionner un template par défaut
-InfoHowToDefaultTemplate = Pour définir un template par défaut, rendez-vous sur la page de configuration du module
+SelectACustomTemplate    = Sélectionner un modèle personnalisé
+SelectADefaultTemplate   = Sélectionner un modèle par défaut
+InfoHowToDefaultTemplate = Pour définir un modèle par défaut, rendez-vous sur la page de configuration du module

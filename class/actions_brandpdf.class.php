@@ -100,11 +100,21 @@ class ActionsBrandPdf
 
 			print load_fiche_titre($langs->trans('DocumentDetails'), '', '');
 
-			print $langs->trans('Logo') . ' : ' . $form::selectArray('document_logo', $logoArray, '', $langs->trans('SelectACustomLogo'), 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
-			print '<br></td>';
-			print $langs->trans('Template') . ' : ' . $form::selectArray('document_template', $templateArray, !empty($conf->global->MAIN_ADD_PDF_BACKGROUND) ? $conf->global->MAIN_ADD_PDF_BACKGROUND : '', $langs->trans('SelectACustomTemplate'), 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
-            print $form->textwithpicto('', $langs->trans('InfoHowToDefaultTemplate'));
-			//print '<input class="button buttongen reposition nomargintop nomarginbottom" id="generatebutton" name="generatebutton" type="submit" value="'. $langs->trans('SpecialGenerate') .'"';
+            print '<table class="noborder centpercent editmode">';
+            print '<tr class="liste_titre">';
+            print '<td>' . $langs->trans("Name") . '</td>';
+            print '<td>' . $langs->trans("SelectTemplate") . '</td>';
+            print '</tr>';
+
+            print '<tr class="oddeven"><td><label for="DefaultLogo">' . $langs->trans("Logo") . '</label></td><td>';
+            print $form::selectArray('document_logo', $logoArray, '', $langs->trans('SelectACustomLogo'), 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
+            print '</td></tr>';
+
+            print '<tr class="oddeven"><td><label for="DefaultTemplate">' . $langs->trans("Template") . $form->textwithpicto('', $langs->trans('InfoHowToDefaultTemplate')) .' </label></td><td>';
+            print $form::selectArray('document_template', $templateArray, !empty($conf->global->MAIN_ADD_PDF_BACKGROUND) ? $conf->global->MAIN_ADD_PDF_BACKGROUND : '', $langs->trans('SelectACustomTemplate'), 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
+            print '</td></tr>';
+
+            print '</table>';
 		}
 
 		return 0;
