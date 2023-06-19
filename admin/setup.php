@@ -59,14 +59,28 @@ saturne_check_access($permissiontoread);
  */
 
 if ($action == 'save') {
-	$templatePdf = GETPOST('document_template', 'alpha');
+    $templatePdf = GETPOST('document_template', 'alpha');
+    $logo        = GETPOST('document_logo', 'alpha');
 
-	if (intval($templatePdf) >= 0) {
-		dolibarr_set_const($db, 'MAIN_ADD_PDF_BACKGROUND', $templatePdf);
-		setEventMessages($langs->trans('DefaultTemplateSave'), []);
-	} else {
-		setEventMessages($langs->trans('EmptyTemplateSelect'), [], 'errors');
-	}
+    if ($templatePdf != $conf->global->MAIN_ADD_PDF_BACKGROUND) {
+        if (intval($templatePdf) >= 0) {
+            dolibarr_set_const($db, 'MAIN_ADD_PDF_BACKGROUND', $templatePdf);
+            setEventMessages($langs->trans('DefaultTemplateSaved'), []);
+        } else {
+            dolibarr_del_const($db, 'MAIN_ADD_PDF_BACKGROUND');
+            setEventMessages($langs->trans('DefaultTemplateDeleted'), []);
+        }
+    }
+
+    if ($logo != $conf->global->BRANDPDF_DEFAULT_LOGO) {
+        if (intval($logo) >= 0) {
+            dolibarr_set_const($db, 'BRANDPDF_DEFAULT_LOGO', $logo);
+            setEventMessages($langs->trans('DefaultLogoSaved'), []);
+        } else {
+            dolibarr_del_const($db, 'BRANDPDF_DEFAULT_LOGO');
+            setEventMessages($langs->trans('DefaultLogoDeleted'), []);
+        }
+    }
 }
 
 /*
@@ -88,6 +102,16 @@ print dol_get_fiche_head($head, 'settings', $title, -1, 'brandpdf_color@brandpdf
 
 $uploadDir     = $conf->ecm->dir_output . '/brandpdf';
 $templateArray = [];
+$logoArray     = [];
+
+// Retrieve custom logos
+$logoFilesArray = dol_dir_list($uploadDir . '/logos', 'files', 0, '.(jpg|jpeg|png)$');
+if (is_array($logoFilesArray) && !empty($logoFilesArray)) {
+    foreach ($logoFilesArray as $logoFile) {
+        $logoArray[$logoFile['name']] .= $logoFile['name'];
+    }
+}
+
 // Retrieve templates
 $templateFilesArray = dol_dir_list($uploadDir . '/template_pdf', 'files', 0, '.pdf$');
 if (is_array($templateFilesArray) && !empty($templateFilesArray)) {
@@ -106,11 +130,19 @@ print '<div class="opacitymedium">' . $langs->trans('HowToAddLogosOrTemplate') .
 print '<table class="noborder centpercent editmode">';
 print '<tr class="liste_titre">';
 print '<td>' . $langs->trans("Name") . '</td>';
+print '<td>' . $langs->trans("Description") . '</td>';
 print '<td>' . $langs->trans("SelectTemplate") . '</td>';
 print '<td>' . $langs->trans("Action") . '</td>';
 print '</tr>';
 
+print '<tr class="oddeven"><td><label for="DefaultLogo">' . $langs->trans("DefaultLogo") . '</label></td><td>';
+print  $langs->trans("DefaultLogoDescription") . '</td><td>';
+print  $form::selectArray('document_logo', $logoArray, $conf->global->BRANDPDF_DEFAULT_LOGO, $langs->trans('SelectADefaultLogo'), 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
+print '<td><input type="submit" class="button" name="save" value="' . $langs->trans("Save") . '">';
+print '</td></tr>';
+
 print '<tr class="oddeven"><td><label for="DefaultTemplate">' . $langs->trans("DefaultTemplate") . '</label></td><td>';
+print $langs->trans("DefaultTemplateDescription") . '</td><td>';
 print  $form::selectArray('document_template', $templateArray, $conf->global->MAIN_ADD_PDF_BACKGROUND, $langs->trans('SelectADefaultTemplate'), 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
 print '<td><input type="submit" class="button" name="save" value="' . $langs->trans("Save") . '">';
 print '</td></tr>';

@@ -28,11 +28,18 @@ BrandPDFDescriptionLong = Customization of document
 #
 
 # Data - Donnée
-DefaultTemplate         = Default template
-SelectTemplate          = Select template
-DefaultTemplateSave     = Template par défaut enregistré
-EmptyTemplateSelect     = No template select
-HowToAddLogosOrTemplate = To add new templates or logos, go to "Documents > BrandPDF" and add them to the required folders (logos or template_pdf).
+DefaultTemplate            = Default template
+DefaultLogo                = Default logo
+DefaultTemplateDescription = Will be used every time a document is generated
+DefaultLogoDescription     = Replace the location of the company logo on a document
+SelectTemplate             = Select template
+DefaultTemplateSaved       = Default template saved
+DefaultTemplateDeleted     = Default template deleted
+DefaultLogoSaved           = Default logo saved
+DefaultLogoDeleted         = Default logo deleted
+SelectADefaultTemplate     = Select a default template
+SelectADefaultLogo         = Select a default logo
+HowToAddLogosOrTemplate    = To add new templates or logos, go to "Documents > BrandPDF" and add them to the required folders (logos or template_pdf).
 
 #
 # Document
@@ -43,5 +50,4 @@ SpecialGenerate          = Special Generation
 DocumentDetails          = Document details
 SelectACustomLogo        = Select a custom logo
 SelectACustomTemplate    = Select a custom template
-SelectADefaultTemplate   = Select a default template
 InfoHowToDefaultTemplate = To set a default document, go to module config page

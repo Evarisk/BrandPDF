@@ -165,7 +165,8 @@ class modBrandPDF extends DolibarrModules
 
             // CONST DOCUMENT
 			$i++ => ['BRAND_PDF_USE_LARGE_LOGO', 'integer', 0, '', 0, 'current'],
-			$i   => ['BRAND_PDF_PREVIOUS_BACKGROUND', 'chaine', '', '', 0, 'current'],
+            $i++ => ['BRAND_PDF_PREVIOUS_BACKGROUND', 'chaine', '', '', 0, 'current'],
+            $i   => ['BRANDPDF_DEFAULT_LOGO', 'chaine', '', '', 0, 'current'],
         ];
 
 		// Some keys to add into the overwriting translation tables

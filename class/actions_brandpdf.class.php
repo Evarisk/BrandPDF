@@ -107,7 +107,7 @@ class ActionsBrandPdf
             print '</tr>';
 
             print '<tr class="oddeven"><td><label for="DefaultLogo">' . $langs->trans("Logo") . '</label></td><td>';
-            print $form::selectArray('document_logo', $logoArray, '', $langs->trans('SelectACustomLogo'), 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
+            print $form::selectArray('document_logo', $logoArray, !empty($conf->global->MAIN_ADD_PDF_BACKGROUND) ? $conf->global->BRANDPDF_DEFAULT_LOGO : '', $langs->trans('SelectACustomLogo'), 0, 0, '', 0, 32, 0, '', 'minwidth300 maxwidth500');
             print '</td></tr>';
 
             print '<tr class="oddeven"><td><label for="DefaultTemplate">' . $langs->trans("Template") . $form->textwithpicto('', $langs->trans('InfoHowToDefaultTemplate')) .' </label></td><td>';
@@ -137,6 +137,7 @@ class ActionsBrandPdf
                 require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
 
 				$defaultTemplate = !empty($conf->global->MAIN_ADD_PDF_BACKGROUND) ? $conf->global->MAIN_ADD_PDF_BACKGROUND : '';
+                $defaultLogo     = !empty($conf->global->BRANDPDF_DEFAULT_LOGO) ? $conf->global->BRANDPDF_DEFAULT_LOGO : '';
                 $templatePdf     = GETPOST('document_template', 'alpha');
 				$logo            = GETPOST('document_logo', 'alpha');
 
@@ -172,6 +173,8 @@ class ActionsBrandPdf
 
                 if (intval($logo) >= 0) {
                     $mysoc->logo = $logo;
+                } else if (!empty($conf->global->BRANDPDF_DEFAULT_LOGO)) {
+                    $mysoc->logo = $conf->global->BRANDPDF_DEFAULT_LOGO;
                 }
 
                 if (intval($templatePdf) >= 0 || intval($logo) >= 0 || !empty($defaultTemplate)) {

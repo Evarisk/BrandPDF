@@ -28,11 +28,18 @@ BrandPDFDescriptionLong = Personnalisation des documents
 #
 
 # Data - Donnée
-DefaultTemplate         = Modèle par défaut
-SelectTemplate          = Choix du modèle
-DefaultTemplateSave     = Modèle par défaut enregistré
-EmptyTemplateSelect     = Aucun modèle sélectionné
-HowToAddLogosOrTemplate = Pour ajouter de nouveaux modèles ou logos, allez dans "Documents > BrandPDF" et ajoutez les dans les dossiers requis (logos ou template_pdf).
+DefaultTemplate            = Modèle par défaut
+DefaultLogo                = Logo par défaut
+DefaultTemplateDescription = Sera employé à chaque génération de document
+DefaultLogoDescription     = Remplacera l'emplacement du logo de la société sur un document
+SelectTemplate             = Choix du modèle
+DefaultTemplateSaved       = Modèle par défaut enregistré
+DefaultTemplateDeleted     = Modèle par défaut supprimé
+DefaultLogoSaved           = Logo par défaut enregistré
+DefaultLogoDeleted         = Logo par défaut supprimé
+SelectADefaultTemplate     = Sélectionner un modèle par défaut
+SelectADefaultLogo         = Sélectionner un logo par défaut
+HowToAddLogosOrTemplate    = Pour ajouter de nouveaux modèles ou logos, allez dans "Documents > BrandPDF" et ajoutez les dans les dossiers requis (logos ou template_pdf).
 
 #
 # Document
@@ -43,5 +50,4 @@ SpecialGenerate          = Génération spéciale
 DocumentDetails          = Détails du document
 SelectACustomLogo        = Sélectionner un logo personnalisé
 SelectACustomTemplate    = Sélectionner un modèle personnalisé
-SelectADefaultTemplate   = Sélectionner un modèle par défaut
 InfoHowToDefaultTemplate = Pour définir un modèle par défaut, rendez-vous sur la page de configuration du module
