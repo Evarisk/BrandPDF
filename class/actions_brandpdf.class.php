@@ -79,7 +79,7 @@ class ActionsBrandPdf
 			$templateArray   = [];
 
 			// Retrieve custom logos
-			$logoFilesArray = dol_dir_list($uploadDir . '/logos', 'files', 0, '.(jpg|jpeg|png|svg)$');
+			$logoFilesArray = dol_dir_list($uploadDir . '/logos', 'files', 0, '.(jpg|jpeg|png)$');
 			if (is_array($logoFilesArray) && !empty($logoFilesArray)) {
 				foreach ($logoFilesArray as $logoFile) {
 					$logoArray[$logoFile['name']] .= $logoFile['name'];
