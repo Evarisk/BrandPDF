@@ -72,6 +72,8 @@ class ActionsBrandPdf
 	{
 		global $conf, $db, $langs;
 
+        $langs->load('brandpdf@brandpdf');
+
 		if ($parameters['currentcontext'] == 'invoicecard' || $parameters['currentcontext'] == 'propalcard') {
 			$form            = new Form($db);
 			$uploadDir       = $conf->ecm->dir_output . '/brandpdf';
