@@ -161,14 +161,14 @@ class ActionsBrandPdf
 					}
                 }
 
-                if (!empty($defaultTemplate)) {
+                if (intval($logo) >= 0 || !empty($defaultTemplate)) {
                     if (empty($conf->global->MAIN_PDF_USE_LARGE_LOGO)) {
                         dolibarr_set_const($db, 'MAIN_PDF_USE_LARGE_LOGO', 1);
                     } else {
                         dolibarr_set_const($db, 'BRAND_PDF_USE_LARGE_LOGO', 1);
                     }
 
-                    if ((intval($templatePdf) < 0) && file_exists(DOL_DATA_ROOT . '/mycompany/' . $defaultTemplate)) {
+                    if ((intval($templatePdf) < 0) && !empty($defaultTemplate) && file_exists(DOL_DATA_ROOT . '/mycompany/' . $defaultTemplate)) {
                         copy(DOL_DATA_ROOT . '/mycompany/' . $defaultTemplate, DOL_DATA_ROOT . '/ecm/brandpdf/' . $defaultTemplate);
                     }
                 }
