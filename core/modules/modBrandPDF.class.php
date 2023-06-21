@@ -51,7 +51,7 @@ class modBrandPDF extends DolibarrModules
 
         // ID for module (must be unique).
         // Use here a free id (See in Home -> System information -> Dolibarr for list of used module id).
-        $this->numero = 436304;
+        $this->numero = 436342;
 
         // Key text used to identify module (for permissions, menus, etc...)
 		$this->rights_class = 'brandpdf';

@@ -2,7 +2,7 @@
 
 ## Informations
 
-- Numéro du module : 436304
+- Numéro du module : 436342
 - Version : 1.0.0
 - Dernière mise à jour : 15/06/2023
 - Éditeur : [Evarisk](https://www.evarisk.com)
@@ -33,7 +33,7 @@
 ### Méthode 1 :
 
 - Depuis le menu "Déployer/Installer un module externe" de Dolibarr :
-- Glisser l'archive ZIP 'module_dolisirh-X.Y.Z' et cliquer sur "ENVOYER FICHIER"
+- Glisser l'archive ZIP 'module_brandpdf-X.Y.Z' et cliquer sur "ENVOYER FICHIER"
 - Activer le module dans la liste des Modules/Applications installés
 
 ### Méthode 2 :
