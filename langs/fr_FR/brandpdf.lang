@@ -1,0 +1,53 @@
+# Copyright (C) 2023 EVARISK <technique@evarisk.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#
+# Générique
+#
+
+# Data - Donnée
+ModuleBrandPDFName      = BrandPDF
+ModuleBrandPDFDesc      = Personnalisation des documents
+BrandPDFDescription     = Personnalisation des documents
+BrandPDFDescriptionLong = Personnalisation des documents
+
+#
+# Config
+#
+
+# Data - Donnée
+DefaultTemplate            = Modèle par défaut
+DefaultLogo                = Logo par défaut
+DefaultTemplateDescription = Sera employé à chaque génération de document
+DefaultLogoDescription     = Remplacera l'emplacement du logo de la société sur un document
+SelectTemplate             = Choix du modèle
+DefaultTemplateSaved       = Modèle par défaut enregistré
+DefaultTemplateDeleted     = Modèle par défaut supprimé
+DefaultLogoSaved           = Logo par défaut enregistré
+DefaultLogoDeleted         = Logo par défaut supprimé
+SelectADefaultTemplate     = Sélectionner un modèle par défaut
+SelectADefaultLogo         = Sélectionner un logo par défaut
+HowToAddLogosOrTemplate    = Pour ajouter de nouveaux modèles ou logos, allez dans "Documents > BrandPDF" et ajoutez les dans les dossiers requis (logos ou template_pdf).
+
+#
+# Document
+#
+
+# Data - Donnée
+SpecialGenerate          = Génération spéciale
+DocumentDetails          = Détails du document
+SelectACustomLogo        = Sélectionner un logo personnalisé
+SelectACustomTemplate    = Sélectionner un modèle personnalisé
+InfoHowToDefaultTemplate = Pour définir un modèle par défaut, rendez-vous sur la page de configuration du module
